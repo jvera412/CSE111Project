@@ -1,0 +1,58 @@
+// Check if the POST query is received
+	if(isset($_POST['customerDetailsCustomerID'])) {
+		
+		$customerDetailsCustomerID = htmlentities($_POST['customerDetailsCustomerID']);
+		$customerDetailsCustomerFullName = htmlentities($_POST['customerDetailsCustomerFullName']);
+		$customerDetailsCustomerMobile = htmlentities($_POST['customerDetailsCustomerMobile']);
+		$customerDetailsCustomerPhone2 = htmlentities($_POST['customerDetailsCustomerPhone2']);
+		$customerDetailsCustomerEmail = htmlentities($_POST['customerDetailsCustomerEmail']);
+		$customerDetailsCustomerAddress = htmlentities($_POST['customerDetailsCustomerAddress']);
+		$customerDetailsCustomerAddress2 = htmlentities($_POST['customerDetailsCustomerAddress2']);
+		$customerDetailsCustomerCity = htmlentities($_POST['customerDetailsCustomerCity']);
+		$customerDetailsCustomerDistrict = htmlentities($_POST['customerDetailsCustomerDistrict']);
+		$customerDetailsStatus = htmlentities($_POST['customerDetailsStatus']);
+		
+		// Check if mandatory fields are not empty
+		if(isset($customerDetailsCustomerFullName) && isset($customerDetailsCustomerMobile) && isset($customerDetailsCustomerAddress)) {
+			
+			// Validate mobile number
+			if(filter_var($customerDetailsCustomerMobile, FILTER_VALIDATE_INT) === 0 || filter_var($customerDetailsCustomerMobile, FILTER_VALIDATE_INT)) {
+				// Mobile number is valid
+			} else {
+				// Mobile number is not valid
+				echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Please enter a valid mobile number</div>';
+				exit();
+			}
+			
+			// Check if CustomerID field is empty. If so, display an error message
+			// We have to specifically tell this to user because the (*) mark is not added to that field
+			if(empty($customerDetailsCustomerID)){
+				echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Please enter the CustomerID to update that customer.</div>';
+				exit();
+			}
+			
+			// Validate second phone number only if it's provided by user
+			if(!empty($customerDetailsCustomerPhone2)){
+				if(filter_var($customerDetailsCustomerPhone2, FILTER_VALIDATE_INT) === 0 || filter_var($customerDetailsCustomerPhone2, FILTER_VALIDATE_INT)) {
+					// Phone number 2 is valid
+				} else {
+					// Phone number 2 is not valid
+					echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Please enter a valid number for phone number 2.</div>';
+					exit();
+				}
+			}
+			
+			// Validate email only if it's provided by user
+			if(!empty($customerDetailsCustomerEmail)) {
+				if (filter_var($customerDetailsCustomerEmail, FILTER_VALIDATE_EMAIL) === false) {
+					// Email is not valid
+					echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Please enter a valid email</div>';
+					exit();
+				}
+			}
+
+			// Check if the given CustomerID is in the DB
+			$customerIDSelectSql = 'SELECT customerID FROM customer WHERE customerID = :customerDetailsCustomerID';
+			$customerIDSelectStatement = $conn->prepare($customerIDSelectSql);
+			$customerIDSelectStatement->execute(['customerDetailsCustomerID' => $customerDetailsCustomerID]);
+			
