@@ -1,0 +1,38 @@
+		  <button type="reset" class="btn" id="itemClear">Clear</button>
+							</form>
+						</div>
+						<div id="itemImageTab" class="container-fluid tab-pane fade">
+							<br>
+							<div id="itemImageMessage"></div>
+							<p>You can upload an image for a particular item using this section.</p> 
+							<p>Please make sure the item is already added to database before uploading the image.</p>
+							<br>							
+							<form name="imageForm" id="imageForm" method="post">
+							  <div class="form-row">
+								<div class="form-group col-md-3" style="display:inline-block">
+								  <label for="itemImageItemNumber">Item Number<span class="requiredIcon">*</span></label>
+								  <input type="text" class="form-control" name="itemImageItemNumber" id="itemImageItemNumber" autocomplete="off">
+								  <div id="itemImageItemNumberSuggestionsDiv" class="customListDivWidth"></div>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="itemImageItemName">Item Name</label>
+									<input type="text" class="form-control" name="itemImageItemName" id="itemImageItemName" readonly>
+								</div>
+							  </div>
+							  <br>
+							  <div class="form-row">
+								  <div class="form-group col-md-7">
+									<label for="itemImageFile">Select Image ( <span class="blueText">jpg</span>, <span class="blueText">jpeg</span>, <span class="blueText">gif</span>, <span class="blueText">png</span> only )</label>
+									<input type="file" class="form-control-file btn btn-dark" id="itemImageFile" name="itemImageFile">
+								  </div>
+							  </div>
+							  <br>
+							  <button type="button" id="updateImageButton" class="btn btn-primary">Upload Image</button>
+							  <button type="button" id="deleteImageButton" class="btn btn-danger">Delete Image</button>
+							  <button type="reset" class="btn">Clear</button>
+							</form>
+						</div>
+					</div>
+				  </div> 
+				</div>
+			  </div>
